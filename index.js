@@ -10,6 +10,7 @@ const mongoose = require("mongoose")
 const router =require("./routes");
 const { appPort, mongoDbSRV } = require("./variables");
 const responseMiddleware = require("./middleware/response");
+const scheduleMiddleware = require("./middleware/schedule");
 
 mongoose.set("strictQuery", false);
 mongoose.connect(mongoDbSRV,{
@@ -25,8 +26,9 @@ const app = new Koa();
 
 app.use(cors({origin: "*"}));
 app.use(koaBody());
+app.use(scheduleMiddleware.scheduleUpdate);
 app.use(KoaLogger());
-app.use(responseMiddleware.responseHandler)
+app.use(responseMiddleware.responseHandler);
 app.use(router.routes());
 
 const server = app.listen(appPort, ()=>{
