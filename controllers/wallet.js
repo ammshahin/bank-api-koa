@@ -14,7 +14,10 @@ exports.addWallet = async ctx => {
       currency: walletData.currency,
       balance: walletData.balance
     };
-    ctx.response.ok({message:`${name}'s wallet created successfully`,data:responseData})
+    ctx.response.ok({
+      message: `${name}'s wallet created successfully`,
+      data: responseData
+    });
   } catch (error) {
     ctx.response.badRequest(error);
   }
@@ -42,7 +45,10 @@ exports.getWallets = async ctx => {
   try {
     const wallets = await WalletModel.getWalletsFromDB();
     const responseData = sortWallets(wallets);
-    ctx.response.ok({data:responseData, message:"Wallets retrived succesfully"})
+    ctx.response.ok({
+      data: responseData,
+      message: "Wallets retrived succesfully"
+    });
   } catch (error) {
     ctx.response.badRequest(error);
   }
@@ -53,4 +59,5 @@ const sortWallets = wallets => {
     return a.createdAt - b.createdAt;
   });
 };
+
 
