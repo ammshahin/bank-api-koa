@@ -9,7 +9,9 @@ const cors =require("koa2-cors");
 const mongoose = require("mongoose")
 const router =require("./routes");
 const { appPort, mongoDbSRV } = require("./variables");
+const responseMiddleware = require("./middleware/response");
 
+mongoose.set("strictQuery", false);
 mongoose.connect(mongoDbSRV,{
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -24,6 +26,7 @@ const app = new Koa();
 app.use(cors({origin: "*"}));
 app.use(koaBody());
 app.use(KoaLogger());
+app.use(responseMiddleware.responseHandler)
 app.use(router.routes());
 
 const server = app.listen(appPort, ()=>{
