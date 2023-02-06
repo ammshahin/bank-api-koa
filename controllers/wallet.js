@@ -3,6 +3,9 @@ const WalletModel = require("../models/Wallet");
 exports.addWallet = async ctx => {
   try {
     const { name, currency, initialBalance } = ctx.request.body;
+    if(!name){
+      throw {status: 400, message: "User name is invalid"}
+    }
     const walletData = await WalletModel.addWalletToDb({
       name,
       currency,
