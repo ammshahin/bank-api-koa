@@ -22,25 +22,36 @@ Additional Packages:
 
 ### Routes:
     1. Can add Wallet.
-    ```
         `POST /wallet`
         payload: {
             "name":"",
             "currency":"" ,
             "initialBalance":
             }
-    ```
+        response: {
+    "message": "{name}'s wallet created successfully",
+    "data": {
+                "id": "",
+                "name": "",
+                "currency": "",
+                "balance": 
+            }
+        }
     2. Fetch All Wallets list.
-    ```
         `GET /wallets
         payload: {}
-    ```
+        Response: [...]
     3. Fetch wallet by wallet id.
-    ```
         `Get wallet/:walletid
-    ```
+        response:{
+                "id": "",
+                "name": "",
+                "currency": "",
+                "balance": ,
+                "todayBalanceChange": 0,
+                "createdAt": ""
+            }
     4. Make Transaction from one wallet to another.
-    ```
         `POST /fx`
         payload: {
                 "to":"",
@@ -48,6 +59,6 @@ Additional Packages:
                 "amount": ,
                 "currency":""
             }
-    ```
-# "todayBalanceChange" resets every 00:00 time 
+
+"todayBalanceChange" resets every 00:00 time 
 
