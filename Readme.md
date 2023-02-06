@@ -1,10 +1,11 @@
 ### Tech Challange- Bank Api
-### Author: Meherullah Shahin ###
+### Author: Meherullah Shahin 
 
 ```
 Runtime: NodeJs
 Framework: KoaJs
 DataBase: MongoDB
+Deployment: Docker with github actions CI/CD
 Additional Packages: 
     "node-cron" => to run schedular
     "uuid: => to generate walletId 
