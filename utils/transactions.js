@@ -7,7 +7,9 @@ exports.validateTransaction = async ({
   amount,
   currency
 }) => {
-  // await validateTransaction({sender, receiver});
+  if(amount <= 0){
+    throw {status:400, message: "Transaction amount is not valid"}
+  }
   const senderBalance = await balanceCheck({ walletId: sender });
   if (senderBalance < amount) {
     throw { status: 400, message: "Sender doesn't have sufficient balance" };
@@ -18,7 +20,7 @@ const balanceCheck = async ({ walletId }) => {
   const { balance } = await WalletModel.getWalletByWalletId(walletId);
   return balance;
 };
-// const txFee = ({{sender, receiver}})
+
 exports.initiateTransaction = async ({ sender, receiver, amount }) => {
   const [senderUpdatedAmount, receiverUpdatedAmount] = await Promise.all([
     amountCalculate({ walletId: sender, amount, type: "credit" }),
@@ -34,10 +36,6 @@ exports.initiateTransaction = async ({ sender, receiver, amount }) => {
       updatedAmount: receiverUpdatedAmount
     })
   ]);
-  //   await Promise.all([
-//   await updateTodayBalanceChange({ sender, receiver, amount});
-  // updateTodayBalanceChange({receiver,amount,type:"debit"}),
-  //   ])
 };
 
 const amountCalculate = async ({ walletId, amount, type }) => {
@@ -53,7 +51,7 @@ exports.updateTodayBalanceChange = async ({ sender, receiver, amount}) => {
     WalletModel.getWalletByWalletId(sender),
     WalletModel.getWalletByWalletId(receiver)
   ]);
-//   console.log(senderTodayBalanceChange);
+  
   await Promise.all([
       TransactionModel.updateTodayBalanceChange({walletId:sender,updatedBalance:(senderTodayBalanceChange - amount)}),
       TransactionModel.updateTodayBalanceChange({walletId:receiver,updatedBalance:(receiverTodayBalanceChange + amount)}),
